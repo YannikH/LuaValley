@@ -1,5 +1,6 @@
 ﻿using LuaValley.API.Interface;
 using NLua;
+using StardewValley.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,11 +65,11 @@ namespace LuaValley.API
             }
         }
 
-        public void LogFunctions()
+        public void LogFunctions(IGameLogger logger)
         {
             foreach (LuaAPI api in apiList)
             {
-                api.LogFunctions();
+                api.LogFunctions(logger);
             }
         }
     }

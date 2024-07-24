@@ -1,4 +1,5 @@
 ﻿using StardewModdingAPI;
+using StardewValley.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,10 +27,10 @@ namespace LuaValley.API
 
         public virtual void Reset() { }
 
-        public void LogFunctions()
+        public void LogFunctions(IGameLogger logger)
         {
             Type myType = GetType();
-            api.mod.Monitor.Log("Logging API: " + apiName, LogLevel.Info);
+            logger.Info("### " + apiName);
             foreach (MethodInfo method in myType.GetMethods())
             {
                 if (!method.IsPublic || method.DeclaringType != GetType()) continue;
@@ -46,7 +47,7 @@ namespace LuaValley.API
                     {
                         methodString += ", ";
                     }
-                    methodString += param.ParameterType + " " + param.Name;
+                    methodString += param.ParameterType.Name + " " + param.Name;
                     if (param.DefaultValue != DBNull.Value)
                     {
                         if (param.DefaultValue == null || param.DefaultValue == "")
@@ -61,9 +62,9 @@ namespace LuaValley.API
                 methodString += ")";
                 if (method.ReturnType != null && method.ReturnType != typeof(void))
                 {
-                    methodString += ", returns: " + method.ReturnType.ToString();
+                    methodString += ", returns: " + method.ReturnType.Name;
                 }
-                api.mod.Monitor.Log(methodString, LogLevel.Info);
+                logger.Info(methodString);
             }
         }
     }

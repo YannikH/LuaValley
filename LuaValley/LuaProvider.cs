@@ -13,6 +13,7 @@ using StardewValley.Objects;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 using LuaValley.API.Util;
+using LuaValley.Helpers;
 
 namespace LuaValley
 {
@@ -33,6 +34,8 @@ namespace LuaValley
             this.apiManager = new APIManager(mod, this);
             CreateState();
             apiManager.inject(state);
+            var logger = new FileLogger(mod.Helper.DirectoryPath + "/functions.md");
+            apiManager.LogFunctions(logger);
         }
 
         public IContentPack GetPack() { return pack; }

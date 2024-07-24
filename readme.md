@@ -96,220 +96,221 @@ The ReflectionAPI and MultiplayerAPI act as wrappers for SMAPI APIs and have not
 
 ### Var
 
-     Var:GetStoreKey(System.Object store), returns: System.String
-     Var:Set(System.Object store, System.String key, System.Object value)
-     Var:Set(System.String key, System.Object value)
-     Var:Get(System.Object store, System.String key, System.Object fallback(optional)), returns: System.Object
-     Var:Get(System.String key, System.Object fallback(optional)), returns: System.Object
+     Var:GetStoreKey(Object store), returns: String
+     Var:Set(Object store, String key, Object value)
+     Var:Set(String key, Object value)
+     Var:Get(Object store, String key, Object fallback(optional)), returns: Object
+     Var:Get(String key, Object fallback(optional)), returns: Object
 
 ### Vector
 
-     Vector:Create(System.Single x, System.Single y), returns: Microsoft.Xna.Framework.Vector2
-     Vector:Distance(Microsoft.Xna.Framework.Vector2 first, Microsoft.Xna.Framework.Vector2 second), returns: System.Single
-     Vector:GetPos(System.Object o), returns: Microsoft.Xna.Framework.Vector2
-     Vector:GetDirection(System.Object first, System.Object second), returns: System.Int32
-     Vector:Distance(System.Object first, System.Object second), returns: System.Single
-     Vector:TileToPx(Microsoft.Xna.Framework.Vector2 tile), returns: Microsoft.Xna.Framework.Vector2
-     Vector:Add(Microsoft.Xna.Framework.Vector2 vector, System.Int32 x, System.Int32 y), returns: Microsoft.Xna.Framework.Vector2
-     Vector:Add(Microsoft.Xna.Framework.Vector2 first, Microsoft.Xna.Framework.Vector2 second), returns: Microsoft.Xna.Framework.Vector2
+     Vector:Create(Single x, Single y), returns: Vector2
+     Vector:Distance(Vector2 first, Vector2 second), returns: Single
+     Vector:GetPos(Object o), returns: Vector2
+     Vector:GetDirection(Object first, Object second), returns: Int32
+     Vector:Distance(Object first, Object second), returns: Single
+     Vector:TileToPx(Vector2 tile), returns: Vector2
+     Vector:Add(Vector2 vector, Int32 x, Int32 y), returns: Vector2
+     Vector:Add(Vector2 first, Vector2 second), returns: Vector2
 
 ### ChatAPI
 
-     ChatAPI:Info(System.Object[] arguments)
-     ChatAPI:Error(System.String text)
-     ChatAPI:Info(System.String text)
+     ChatAPI:Error(String text)
+     ChatAPI:Info(String text)
+     ChatAPI:Info(Object[] arguments)
 
 ### LogAPI
 
-     LogAPI:Info(System.String content)
-     LogAPI:Error(System.String content)
-     LogAPI:Warn(System.String content)
-     LogAPI:Inspect(System.Object e)
+     LogAPI:Info(String content)
+     LogAPI:Error(String content)
+     LogAPI:Warn(String content)
+     LogAPI:Inspect(Object e)
      LogAPI:Console()
 
 ### TextAPI
 
-     TextAPI:Localize(System.String key, System.Object args), returns: System.String
-     TextAPI:DrawTextBubble(System.String text, Microsoft.Xna.Framework.Vector2 tilePos, System.Boolean requireHover = False, System.String key(optional)), returns: System.String
-     TextAPI:DrawText(System.String text, Microsoft.Xna.Framework.Vector2 tilePos, System.String key(optional)), returns: System.String
-     TextAPI:removeDrawing(System.String key)
+     TextAPI:Localize(String key, Object args), returns: String
+     TextAPI:DrawTextBubble(String text, Vector2 tilePos, Boolean requireHover = False, String key(optional)), returns: String
+     TextAPI:DrawText(String text, Vector2 tilePos, String key(optional)), returns: String
+     TextAPI:removeDrawing(String key)
      TextAPI:ClearText()
 
 ### UIAPI
 
-     UIAPI:CreateNumberMenu(System.String text, NLua.LuaFunction callback, System.Int32 price = -1, System.Int32 minValue = 0, System.Int32 maxValue = 99, System.Int32 defaultNumber = 0)
-     UIAPI:CreateNamingMenu(System.String title, NLua.LuaFunction callback, System.String defaultName(optional))
-     UIAPI:CreateTextInputMenu(System.String title, NLua.LuaFunction callback, System.String defaultName(optional))
-     UIAPI:CreateConfirmationMenu(System.String message, NLua.LuaFunction onAccept, NLua.LuaFunction onCancel)
-     UIAPI:CreateMailMenu(System.String title, System.String text)
-     UIAPI:CreateChoiceMenu(NLua.LuaTable options, NLua.LuaFunction chooseAction)
-     UIAPI:CreateItemGrabMenu(NLua.LuaTable itemsTable, System.Boolean essential = False)
-     UIAPI:CreateItemListMenu(System.String title, NLua.LuaTable itemsTable)
-     UIAPI:CreateShopMenu(NLua.LuaTable inventory)
+     UIAPI:CreateNumberMenu(String text, LuaFunction callback, Int32 price = -1, Int32 minValue = 0, Int32 maxValue = 99, Int32 defaultNumber = 0)
+     UIAPI:CreateNamingMenu(String title, LuaFunction callback, String defaultName(optional))
+     UIAPI:CreateTextInputMenu(String title, LuaFunction callback, String defaultName(optional))
+     UIAPI:CreateConfirmationMenu(String message, LuaFunction onAccept, LuaFunction onCancel)
+     UIAPI:CreateMailMenu(String title, String text)
+     UIAPI:CreateChoiceMenu(LuaTable options, LuaFunction chooseAction)
+     UIAPI:CreateItemGrabMenu(LuaTable itemsTable, Boolean essential = False)
+     UIAPI:CreateItemListMenu(String title, LuaTable itemsTable)
+     UIAPI:CreateShopMenu(LuaTable inventory)
      UIAPI:CreateAnimationPreviewTool()
      UIAPI:CloseMenu()
 
 ### DialogueAPI
 
-     DialogueAPI:Create(System.String content)
-     DialogueAPI:Create(System.String content, StardewValley.NPC character, System.String emotion = Neutral)
-     DialogueAPI:Create(System.String content, NLua.LuaTable responses, NLua.LuaFunction callback)
+     DialogueAPI:Create(String content)
+     DialogueAPI:Create(String content, NPC character, String emotion = Neutral)
+     DialogueAPI:Create(String content, LuaTable responses, LuaFunction callback)
 
 ### GameAPI
 
-     GameAPI:AddEventHandler(System.String type, NLua.LuaFunction callback, System.Boolean triggerOnce = False), returns: System.String
-     GameAPI:CleanupEvents(System.Object sender, StardewModdingAPI.Events.UpdateTickingEventArgs e)
-     GameAPI:RemoveEvent(System.String name)
+     GameAPI:RunFunctionQueue(Object sender, UpdateTickedEventArgs e)
+     GameAPI:CleanupEvents(Object sender, UpdateTickingEventArgs e)
+     GameAPI:AddEventHandler(String type, LuaFunction callback, Boolean triggerOnce = False), returns: String
+     GameAPI:RemoveEvent(String name)
      GameAPI:Reset()
-     GameAPI:SetCursor(System.String cursor = default)
-     GameAPI:DebugCommand(System.String command), returns: System.String
-     GameAPI:ExecuteWhenFree(NLua.LuaFunction function)
-     GameAPI:RegisterTrigger(System.String name)
-     GameAPI:RaiseTrigger(System.String name, System.Object[] args)
-     GameAPI:RegisterAction(System.String name, NLua.LuaFunction function)
-     GameAPI:RunFunctionQueue(System.Object sender, StardewModdingAPI.Events.UpdateTickedEventArgs e)
-     GameAPI:ExecuteAfter(System.Int32 milliseconds, NLua.LuaFunction function)
+     GameAPI:SetCursor(String cursor = default)
+     GameAPI:DebugCommand(String command), returns: String
+     GameAPI:ExecuteWhenFree(LuaFunction function)
+     GameAPI:RegisterTrigger(String name)
+     GameAPI:RaiseTrigger(String name, Object[] args)
+     GameAPI:RegisterAction(String name, LuaFunction function)
+     GameAPI:ExecuteAfter(Int32 milliseconds, LuaFunction function)
 
 ### MultiplayerAPI
 
-     MultiplayerAPI:SendMessage(System.Object content)
-     MultiplayerAPI:OnModMessageReceived(System.Object sender, StardewModdingAPI.Events.ModMessageReceivedEventArgs e)
-     MultiplayerAPI:AddMessageHandler(NLua.LuaFunction callback, System.Boolean triggerOnce = False), returns: System.String
-     MultiplayerAPI:RemoveMessageHandler(System.String name)
+     MultiplayerAPI:OnModMessageReceived(Object sender, ModMessageReceivedEventArgs e)
+     MultiplayerAPI:SendMessage(Object content)
+     MultiplayerAPI:AddMessageHandler(LuaFunction callback, Boolean triggerOnce = False), returns: String
+     MultiplayerAPI:RemoveMessageHandler(String name)
      MultiplayerAPI:ClearHandlers()
 
 ### ReflectionAPI
 
-     ReflectionAPI:GetBool(System.Object target, System.String fieldName), returns: System.Boolean
-     ReflectionAPI:GetString(System.Object target, System.String fieldName), returns: System.String
-     ReflectionAPI:GetInt(System.Object target, System.String fieldName), returns: System.Int32
-     ReflectionAPI:GetFloat(System.Object target, System.String fieldName), returns: System.Single
-     ReflectionAPI:SetBool(System.Object target, System.String fieldName, System.Boolean value)
-     ReflectionAPI:SetString(System.Object target, System.String fieldName, System.String value)
-     ReflectionAPI:SetInt(System.Object target, System.String fieldName, System.Int32 value)
-     ReflectionAPI:SetFloat(System.Object target, System.String fieldName, System.Single value)
-     ReflectionAPI:GetValue(System.Object target, System.String fieldName), returns: T
-     ReflectionAPI:SetValue(System.Object target, System.String fieldName, T value)
+     ReflectionAPI:GetBool(Object target, String fieldName), returns: Boolean
+     ReflectionAPI:GetString(Object target, String fieldName), returns: String
+     ReflectionAPI:GetInt(Object target, String fieldName), returns: Int32
+     ReflectionAPI:GetFloat(Object target, String fieldName), returns: Single
+     ReflectionAPI:SetBool(Object target, String fieldName, Boolean value)
+     ReflectionAPI:SetString(Object target, String fieldName, String value)
+     ReflectionAPI:SetInt(Object target, String fieldName, Int32 value)
+     ReflectionAPI:SetFloat(Object target, String fieldName, Single value)
+     ReflectionAPI:GetValue(Object target, String fieldName), returns: T
+     ReflectionAPI:SetValue(Object target, String fieldName, T value)
 
 ### SaveAPI
 
-     SaveAPI:Set(System.String key, System.Int32 value)
-     SaveAPI:Set(System.String key, System.String value)
-     SaveAPI:Get(System.String key), returns: System.Object
+     SaveAPI:Set(String key, Int32 value)
+     SaveAPI:Set(String key, String value)
+     SaveAPI:Get(String key), returns: Object
 
 ### SpriteAPI
 
-     SpriteAPI:Create(System.String sheet, System.Int32 x, System.Int32 y, System.Int32 w, System.Int32 h, System.Single animationInterval, System.Int32 animationLength, System.Int32 loops, Microsoft.Xna.Framework.Vector2 pixelPos, System.Boolean flipped = False), returns: StardewValley.TemporaryAnimatedSprite
-     SpriteAPI:Create(LuaValley.API.Game.SpriteSheet sheet, System.Int32 x, System.Int32 y, Microsoft.Xna.Framework.Vector2 tilePos, System.Boolean flipped = False), returns: StardewValley.TemporaryAnimatedSprite
-     SpriteAPI:CreateSheet(System.String sheet, System.Int32 w, System.Int32 h), returns: LuaValley.API.Game.SpriteSheet
-     SpriteAPI:Scale(StardewValley.TemporaryAnimatedSprite sprite, System.Single scale)
-     SpriteAPI:ScaleTile(StardewValley.TemporaryAnimatedSprite sprite, System.Single scale)
-     SpriteAPI:SetMovement(StardewValley.TemporaryAnimatedSprite sprite, Microsoft.Xna.Framework.Vector2 motion)
-     SpriteAPI:OnEnd(StardewValley.TemporaryAnimatedSprite sprite, NLua.LuaFunction callback)
-     SpriteAPI:End(StardewValley.TemporaryAnimatedSprite sprite)
-     SpriteAPI:SetRotation(StardewValley.TemporaryAnimatedSprite sprite, System.Single rotation, System.Single rotationRate = 0)
-     SpriteAPI:SetPosition(StardewValley.TemporaryAnimatedSprite sprite, Microsoft.Xna.Framework.Vector2 position)
-     SpriteAPI:HighlightPlacement(Microsoft.Xna.Framework.Vector2 tile, System.Int32 state), returns: StardewValley.TemporaryAnimatedSprite
+     SpriteAPI:Create(String sheet, Int32 x, Int32 y, Int32 w, Int32 h, Single animationInterval, Int32 animationLength, Int32 loops, Vector2 pixelPos, Boolean flipped = False), returns: TemporaryAnimatedSprite
+     SpriteAPI:Create(SpriteSheet sheet, Int32 x, Int32 y, Vector2 tilePos, Boolean flipped = False), returns: TemporaryAnimatedSprite
+     SpriteAPI:CreateSheet(String sheet, Int32 w, Int32 h), returns: SpriteSheet
+     SpriteAPI:Scale(TemporaryAnimatedSprite sprite, Single scale)
+     SpriteAPI:ScaleTile(TemporaryAnimatedSprite sprite, Single scale)
+     SpriteAPI:SetMovement(TemporaryAnimatedSprite sprite, Vector2 motion)
+     SpriteAPI:OnEnd(TemporaryAnimatedSprite sprite, LuaFunction callback)
+     SpriteAPI:End(TemporaryAnimatedSprite sprite)
+     SpriteAPI:SetRotation(TemporaryAnimatedSprite sprite, Single rotation, Single rotationRate = 0)
+     SpriteAPI:SetPosition(TemporaryAnimatedSprite sprite, Vector2 position)
+     SpriteAPI:HighlightPlacement(Vector2 tile, Int32 state), returns: TemporaryAnimatedSprite
 
 ### WorldAPI
 
-     WorldAPI:CreateTileActionName(), returns: System.String
-     WorldAPI:GetMouseTile(), returns: Microsoft.Xna.Framework.Vector2
-     WorldAPI:LocationName(), returns: System.String
-     WorldAPI:LocationName(StardewValley.GameLocation loc), returns: System.String
-     WorldAPI:GetLocation(System.String locationName(optional)), returns: StardewValley.GameLocation
-     WorldAPI:GetEmptyTile(Microsoft.Xna.Framework.Vector2 tile, System.String locationName(optional)), returns: Microsoft.Xna.Framework.Vector2
-     WorldAPI:IsOpenTile(Microsoft.Xna.Framework.Vector2 tile, System.String locationName(optional)), returns: System.Boolean
-     WorldAPI:ForEachBuilding(NLua.LuaFunction function, System.Boolean ignoreConstruction = True)
-     WorldAPI:ForEachLocation(NLua.LuaFunction function)
-     WorldAPI:SetTileClickAction(Microsoft.Xna.Framework.Vector2 tile, System.String action, System.String locationName(optional), System.Boolean passable = True, System.Int32 tileIndex = 48)
-     WorldAPI:SetTileClickAction(Microsoft.Xna.Framework.Vector2 tile, NLua.LuaFunction action, System.String locationName(optional), System.Boolean passable = True, System.Int32 tileIndex = 48)
-     WorldAPI:RegisterTileAction(System.String name, NLua.LuaFunction action)
-     WorldAPI:SetTileTouchAction(Microsoft.Xna.Framework.Vector2 tile, System.String action, System.String locationName(optional), System.Int32 tileIndex = 48)
-     WorldAPI:SetMapTileIndex(Microsoft.Xna.Framework.Vector2 tile, System.Int32 index, System.String layer, System.Int32 tileSheet = 0, System.String locationName(optional))
-     WorldAPI:GetMapTileIndex(Microsoft.Xna.Framework.Vector2 tile, System.String layer, System.String locationName(optional)), returns: System.Int32
+     WorldAPI:CreateTileActionName(), returns: String
+     WorldAPI:GetMouseTile(), returns: Vector2
+     WorldAPI:LocationName(), returns: String
+     WorldAPI:LocationName(GameLocation loc), returns: String
+     WorldAPI:GetLocation(String locationName(optional)), returns: GameLocation
+     WorldAPI:GetEmptyTile(Vector2 tile, String locationName(optional)), returns: Vector2
+     WorldAPI:IsOpenTile(Vector2 tile, String locationName(optional)), returns: Boolean
+     WorldAPI:ForEachBuilding(LuaFunction function, Boolean ignoreConstruction = True)
+     WorldAPI:ForEachLocation(LuaFunction function)
+     WorldAPI:SetTileClickAction(Vector2 tile, String action, String locationName(optional), Boolean passable = True, Int32 tileIndex = 48)
+     WorldAPI:SetTileClickAction(Vector2 tile, LuaFunction action, String locationName(optional), Boolean passable = True, Int32 tileIndex = 48)
+     WorldAPI:RegisterTileAction(String name, LuaFunction action)
+     WorldAPI:SetTileTouchAction(Vector2 tile, String action, String locationName(optional), Int32 tileIndex = 48)
+     WorldAPI:SetMapTileIndex(Vector2 tile, Int32 index, String layer, Int32 tileSheet = 0, String locationName(optional))
+     WorldAPI:GetMapTileIndex(Vector2 tile, String layer, String locationName(optional)), returns: Int32
 
 ### EventAPI
 
-     EventAPI:HasActiveEvent(), returns: System.Boolean
-     EventAPI:PlayScript(System.String script, System.String locationName(optional)), returns: StardewValley.Event
-     EventAPI:CreateEvent(), returns: StardewValley.Event
+     EventAPI:HasActiveEvent(), returns: Boolean
+     EventAPI:PlayScript(String script, String locationName(optional)), returns: Event
+     EventAPI:CreateEvent(), returns: Event
      EventAPI:EndEvent()
-     EventAPI:CurrentEvent(), returns: StardewValley.Event
-     EventAPI:AddScript(StardewValley.Event evt, System.String script)
-     EventAPI:AllowControl(System.Boolean canRun = False)
-     EventAPI:EndControl(StardewValley.Event evt)
-     EventAPI:Play(StardewValley.Event evt, System.String locationName(optional))
+     EventAPI:CurrentEvent(), returns: Event
+     EventAPI:AddScript(Event evt, String script)
+     EventAPI:AllowControl(Boolean canRun = False)
+     EventAPI:EndControl(Event evt)
+     EventAPI:Play(Event evt, String locationName(optional))
 
 ### CharacterAPI
 
-     CharacterAPI:GetNPC(System.String name), returns: StardewValley.NPC
-     CharacterAPI:GetPlayer(), returns: StardewValley.Farmer
-     CharacterAPI:Get(System.String name), returns: StardewValley.Farmer
-     CharacterAPI:GetHost(), returns: StardewValley.Farmer
-     CharacterAPI:GetInventory(), returns: NLua.LuaTable
-     CharacterAPI:GetInventory(StardewValley.Farmer farmer), returns: NLua.LuaTable
-     CharacterAPI:OnTile(System.Int32 x, System.Int32 y, System.String locationName(optional)), returns: StardewValley.Character
-     CharacterAPI:GetTilePos(StardewValley.Character character), returns: Microsoft.Xna.Framework.Vector2
-     CharacterAPI:GetPlayerTilePos(), returns: Microsoft.Xna.Framework.Vector2
-     CharacterAPI:GetLocationName(StardewValley.Character character), returns: System.String
-     CharacterAPI:Say(StardewValley.NPC character, System.String text, System.String emotion = neutral)
-     CharacterAPI:Say(StardewValley.NPC character, NLua.LuaTable lines, System.String emotion = Neutral)
-     CharacterAPI:Warp(Microsoft.Xna.Framework.Vector2 tile, StardewValley.Character character, System.String locationName(optional))
-     CharacterAPI:ForEachCharacter(NLua.LuaFunction function, System.Boolean includeEventActors = True)
-     CharacterAPI:ForEachVillager(NLua.LuaFunction function, System.Boolean includeEventActors = True)
-     CharacterAPI:CreateNPC(System.String spritePath, Microsoft.Xna.Framework.Vector2 tile), returns: StardewValley.NPC
-     CharacterAPI:ResizeSprite(StardewValley.Character character, Microsoft.Xna.Framework.Vector2 size)
-     CharacterAPI:PlayAnimation(StardewValley.Character character, NLua.LuaTable framesTable)
-     CharacterAPI:ClearAnimation(StardewValley.Character character)
-     CharacterAPI:EndAnimation(StardewValley.Character character)
-     CharacterAPI:FaceDirection(StardewValley.Character character, System.Int32 direction)
-     CharacterAPI:CreateMonster(System.String name, Microsoft.Xna.Framework.Vector2 tile), returns: StardewValley.Monsters.Monster
-     CharacterAPI:MoveTo(StardewValley.NPC character, Microsoft.Xna.Framework.Vector2 tile, NLua.LuaFunction callback(optional))
-     CharacterAPI:SetUsingTool(System.Boolean val)
+     CharacterAPI:GetNPC(String name), returns: NPC
+     CharacterAPI:GetPlayer(), returns: Farmer
+     CharacterAPI:Get(String name), returns: Farmer
+     CharacterAPI:GetHost(), returns: Farmer
+     CharacterAPI:GetInventory(), returns: LuaTable
+     CharacterAPI:GetInventory(Farmer farmer), returns: LuaTable
+     CharacterAPI:OnTile(Int32 x, Int32 y, String locationName(optional)), returns: Character
+     CharacterAPI:GetTilePos(Character character), returns: Vector2
+     CharacterAPI:GetPlayerTilePos(), returns: Vector2
+     CharacterAPI:GetLocationName(Character character), returns: String
+     CharacterAPI:Say(NPC character, String text, String emotion = neutral)
+     CharacterAPI:Say(NPC character, LuaTable lines, String emotion = Neutral)
+     CharacterAPI:Warp(Vector2 tile, Character character, String locationName(optional))
+     CharacterAPI:ForEachCharacter(LuaFunction function, Boolean includeEventActors = True)
+     CharacterAPI:ForEachVillager(LuaFunction function, Boolean includeEventActors = True)
+     CharacterAPI:CreateNPC(String spritePath, Vector2 tile), returns: NPC
+     CharacterAPI:ResizeSprite(Character character, Vector2 size)
+     CharacterAPI:PlayAnimation(Character character, LuaTable framesTable)
+     CharacterAPI:ClearAnimation(Character character)
+     CharacterAPI:EndAnimation(Character character)
+     CharacterAPI:FaceDirection(Character character, Int32 direction)
+     CharacterAPI:CreateMonster(String name, Vector2 tile), returns: Monster
+     CharacterAPI:MoveTo(NPC character, Vector2 tile, LuaFunction callback(optional))
+     CharacterAPI:SetUsingTool(Boolean val)
      CharacterAPI:DisableTool()
 
 ### ObjectAPI
 
-     ObjectAPI:Create(System.String id), returns: StardewValley.Object
-     ObjectAPI:AddToInventory(StardewValley.Object obj)
-     ObjectAPI:AddToInventory(StardewValley.Farmer f, StardewValley.Object obj)
-     ObjectAPI:Drop(StardewValley.Object obj, Microsoft.Xna.Framework.Vector2 pos, System.String locationName(optional))
-     ObjectAPI:Remove(StardewValley.Object obj, System.String locationName(optional))
-     ObjectAPI:SetSprite(StardewValley.Object obj, System.Int32 id)
-     ObjectAPI:Place(StardewValley.Object obj, Microsoft.Xna.Framework.Vector2 tilePos, System.String locationName(optional))
-     ObjectAPI:SetPos(StardewValley.Object obj, Microsoft.Xna.Framework.Vector2 tilePos)
-     ObjectAPI:SetInvisible(StardewValley.Object obj, System.Boolean invisible)
-     ObjectAPI:FromTile(System.Int32 x, System.Int32 y, System.String locationName(optional)), returns: StardewValley.Object
-     ObjectAPI:ActiveObject(), returns: StardewValley.Object
-     ObjectAPI:GetItems(StardewValley.Object obj), returns: NLua.LuaTable
-     ObjectAPI:ForEachCrop(NLua.LuaFunction function)
-     ObjectAPI:ForEachItem(NLua.LuaFunction function)
-     ObjectAPI:ForEachItemIn(System.String locationName, NLua.LuaFunction function)
+     ObjectAPI:Create(String id), returns: Object
+     ObjectAPI:AddToInventory(Object obj)
+     ObjectAPI:AddToInventory(Farmer f, Object obj)
+     ObjectAPI:Drop(Object obj, Vector2 pos, String locationName(optional))
+     ObjectAPI:Remove(Object obj, String locationName(optional))
+     ObjectAPI:SetSprite(Object obj, Int32 id)
+     ObjectAPI:Place(Object obj, Vector2 tilePos, String locationName(optional))
+     ObjectAPI:SetPos(Object obj, Vector2 tilePos)
+     ObjectAPI:SetInvisible(Object obj, Boolean invisible)
+     ObjectAPI:FromTile(Int32 x, Int32 y, String locationName(optional)), returns: Object
+     ObjectAPI:ActiveObject(), returns: Object
+     ObjectAPI:GetItems(Object obj), returns: LuaTable
+     ObjectAPI:ForEachCrop(LuaFunction function)
+     ObjectAPI:ForEachItem(LuaFunction function)
+     ObjectAPI:ForEachItemIn(String locationName, LuaFunction function)
 
 ### TerrainFeatureAPI
 
-     TerrainFeatureAPI:GetTerrainFeatures(System.String locationName(optional)), returns: NLua.LuaTable
-     TerrainFeatureAPI:IsTree(StardewValley.TerrainFeatures.TerrainFeature feature), returns: System.Boolean
-     TerrainFeatureAPI:IsFruitTree(StardewValley.TerrainFeatures.TerrainFeature feature), returns: System.Boolean
-     TerrainFeatureAPI:IsGiantCrop(StardewValley.TerrainFeatures.TerrainFeature feature), returns: System.Boolean
-     TerrainFeatureAPI:ApplyDamage(StardewValley.TerrainFeatures.TerrainFeature t, System.Int32 damage)
-     TerrainFeatureAPI:PerformUseAction(StardewValley.TerrainFeatures.TerrainFeature t)
-     TerrainFeatureAPI:CreateHoeDirt(Microsoft.Xna.Framework.Vector2 tile, System.String locationName(optional)), returns: StardewValley.TerrainFeatures.HoeDirt
-     TerrainFeatureAPI:CreateFruitTree(Microsoft.Xna.Framework.Vector2 tile, System.String id, System.Int32 growthStage = 0, System.String locationName(optional)), returns: StardewValley.TerrainFeatures.FruitTree
-     TerrainFeatureAPI:CreateTree(Microsoft.Xna.Framework.Vector2 tile, System.String id, System.Int32 growthStage = 0, System.Boolean isGreenRainTemporaryTree = False, System.String locationName(optional)), returns: StardewValley.TerrainFeatures.Tree
-     TerrainFeatureAPI:CreateBush(Microsoft.Xna.Framework.Vector2 tile, System.Int32 size, System.Int32 datePlantedOverride = -1, System.String locationName(optional)), returns: StardewValley.TerrainFeatures.Bush
-     TerrainFeatureAPI:CreateCosmeticPlant(Microsoft.Xna.Framework.Vector2 tile, System.Int32 id, System.String locationName(optional)), returns: StardewValley.TerrainFeatures.CosmeticPlant
-     TerrainFeatureAPI:CreateFlooring(Microsoft.Xna.Framework.Vector2 tile, System.String id, System.String locationName(optional)), returns: StardewValley.TerrainFeatures.Flooring
-     TerrainFeatureAPI:CreateGiantCrop(Microsoft.Xna.Framework.Vector2 tile, System.String id, System.String locationName(optional)), returns: StardewValley.TerrainFeatures.GiantCrop
-     TerrainFeatureAPI:CreateCosmeticPlant(Microsoft.Xna.Framework.Vector2 tile, System.Int32 id, System.Int32 numWeeds = 0, System.String locationName(optional)), returns: StardewValley.TerrainFeatures.Grass
-     TerrainFeatureAPI:AddToLocation(Microsoft.Xna.Framework.Vector2 tile, StardewValley.TerrainFeatures.TerrainFeature feature, System.String locationName(optional)), returns: StardewValley.TerrainFeatures.TerrainFeature
+     TerrainFeatureAPI:GetTerrainFeatures(String locationName(optional)), returns: LuaTable
+     TerrainFeatureAPI:IsTree(TerrainFeature feature), returns: Boolean
+     TerrainFeatureAPI:IsFruitTree(TerrainFeature feature), returns: Boolean
+     TerrainFeatureAPI:IsGiantCrop(TerrainFeature feature), returns: Boolean
+     TerrainFeatureAPI:ApplyDamage(TerrainFeature t, Int32 damage)
+     TerrainFeatureAPI:PerformUseAction(TerrainFeature t)
+     TerrainFeatureAPI:CreateHoeDirt(Vector2 tile, String locationName(optional)), returns: HoeDirt
+     TerrainFeatureAPI:CreateFruitTree(Vector2 tile, String id, Int32 growthStage = 0, String locationName(optional)), returns: FruitTree
+     TerrainFeatureAPI:CreateTree(Vector2 tile, String id, Int32 growthStage = 0, Boolean isGreenRainTemporaryTree = False, String locationName(optional)), returns: Tree
+     TerrainFeatureAPI:CreateBush(Vector2 tile, Int32 size, Int32 datePlantedOverride = -1, String locationName(optional)), returns: Bush
+     TerrainFeatureAPI:CreateCosmeticPlant(Vector2 tile, Int32 id, String locationName(optional)), returns: CosmeticPlant
+     TerrainFeatureAPI:CreateFlooring(Vector2 tile, String id, String locationName(optional)), returns: Flooring
+     TerrainFeatureAPI:CreateGiantCrop(Vector2 tile, String id, String locationName(optional)), returns: GiantCrop
+     TerrainFeatureAPI:CreateCosmeticPlant(Vector2 tile, Int32 id, Int32 numWeeds = 0, String locationName(optional)), returns: Grass
+     TerrainFeatureAPI:AddToLocation(Vector2 tile, TerrainFeature feature, String locationName(optional)), returns: TerrainFeature
 
 ### ToolAPI
 
-     ToolAPI:OverrideToolFunction(System.String itemId, NLua.LuaFunction useFunction)
-     ToolAPI:AddBeforeUseFunction(System.String itemId, NLua.LuaFunction beforeFunction)
-     ToolAPI:DisableTool(System.String itemId)
-     ToolAPI:RestoreTool(System.String itemId)
+     ToolAPI:ActiveTool(), returns: Tool
+     ToolAPI:OverrideToolFunction(String itemId, LuaFunction useFunction)
+     ToolAPI:AddBeforeUseFunction(String itemId, LuaFunction beforeFunction)
+     ToolAPI:DisableTool(String itemId)
+     ToolAPI:RestoreTool(String itemId)
      ToolAPI:UseTool()
      ToolAPI:Reset()
