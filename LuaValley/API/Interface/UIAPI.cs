@@ -138,5 +138,21 @@ namespace LuaValley.API.Interface
         {
             Game1.activeClickableMenu = null;
         }
+
+        public void SetCursor(string cursor = "default")
+        {
+            int cursorType = Game1.cursor_default;
+            switch (cursor)
+            {
+                case "none": cursorType = Game1.cursor_none; break;
+                case "wait": cursorType = Game1.cursor_wait; break;
+                case "grab": cursorType = Game1.cursor_grab; break;
+                case "gift": cursorType = Game1.cursor_gift; break;
+                case "talk": cursorType = Game1.cursor_talk; break;
+                case "look": cursorType = Game1.cursor_look; break;
+                case "harvest": cursorType = Game1.cursor_harvest; break;
+            }
+            Game1.mouseCursor = cursorType;
+        }
     }
 }

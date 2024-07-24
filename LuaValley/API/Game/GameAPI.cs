@@ -126,7 +126,7 @@ namespace LuaValley.API.Game
             return "ERROR";
         }
 
-        public void CleanupEvents(object? sender, UpdateTickingEventArgs e)
+        private void CleanupEvents(object? sender, UpdateTickingEventArgs e)
         {
             events.RemoveAll((e) => toRemoveEvents.Contains(e.id));
         }
@@ -158,22 +158,6 @@ namespace LuaValley.API.Game
                     }
                 }
             };
-        }
-
-        public void SetCursor(string cursor = "default")
-        {
-            int cursorType = Game1.cursor_default;
-            switch (cursor)
-            {
-                case "none": cursorType = Game1.cursor_none; break;
-                case "wait": cursorType = Game1.cursor_wait; break;
-                case "grab": cursorType = Game1.cursor_grab; break;
-                case "gift": cursorType = Game1.cursor_gift; break;
-                case "talk": cursorType = Game1.cursor_talk; break;
-                case "look": cursorType = Game1.cursor_look; break;
-                case "harvest": cursorType = Game1.cursor_harvest; break;
-            }
-            Game1.mouseCursor = cursorType;
         }
 
         public string DebugCommand(string command)
@@ -217,7 +201,7 @@ namespace LuaValley.API.Game
             };
         }
 
-        public void RunFunctionQueue(object? sender, UpdateTickedEventArgs e)
+        private void RunFunctionQueue(object? sender, UpdateTickedEventArgs e)
         {
             var time = Game1.currentGameTime.TotalGameTime.TotalMilliseconds;
             for (int i = queuedFunctions.Count- 1; i >= 0; i--)

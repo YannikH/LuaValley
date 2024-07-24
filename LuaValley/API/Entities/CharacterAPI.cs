@@ -209,15 +209,5 @@ namespace LuaValley.API.Entities
                 };
             }
         }
-
-        public void SetUsingTool(bool val)
-        {
-            Game1.player.UsingTool = val;
-        }
-
-        public void DisableTool()
-        {
-            Game1.player.canOnlyWalk = true;
-        }
     }
 }

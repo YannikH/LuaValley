@@ -61,10 +61,5 @@ namespace LuaValley.API.Interface
                 api.mod.Monitor.Log(output, LogLevel.Info);
             }
         }
-
-        public void Console()
-        {
-            //console.Show(true);
-        }
     }
 }
