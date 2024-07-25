@@ -6,7 +6,7 @@ A Lua implementation for stardew valley
 
 This is still an experiment/prototype, it is not yet ready for release, but I've made it publicly visible so people can look at the code.
 
-## Design
+## Design/goal
 
 The goal of this project is to offer up a safe and easy to use Lua scripting impleentation for StardewValley. Some of the guiding principles are:
 
@@ -18,6 +18,7 @@ The goal of this project is to offer up a safe and easy to use Lua scripting imp
 - Lua APIs are not object oriented
   - One of the goals of this project is to make modding simpler for users with minimal programming experience
   - Because of this, API functions should take game objects as arguments, instead of adding methods to game object instances.
+- Some basic debugging should be available without using visual studio
 
 ## Setup
 
@@ -125,7 +126,6 @@ The ReflectionAPI and MultiplayerAPI act as wrappers for SMAPI APIs and have not
      LogAPI:Error(String content)
      LogAPI:Warn(String content)
      LogAPI:Inspect(Object e)
-     LogAPI:Console()
 
 ### TextAPI
 
@@ -148,6 +148,7 @@ The ReflectionAPI and MultiplayerAPI act as wrappers for SMAPI APIs and have not
      UIAPI:CreateShopMenu(LuaTable inventory)
      UIAPI:CreateAnimationPreviewTool()
      UIAPI:CloseMenu()
+     UIAPI:SetCursor(String cursor = default)
 
 ### DialogueAPI
 
@@ -157,12 +158,9 @@ The ReflectionAPI and MultiplayerAPI act as wrappers for SMAPI APIs and have not
 
 ### GameAPI
 
-     GameAPI:RunFunctionQueue(Object sender, UpdateTickedEventArgs e)
-     GameAPI:CleanupEvents(Object sender, UpdateTickingEventArgs e)
      GameAPI:AddEventHandler(String type, LuaFunction callback, Boolean triggerOnce = False), returns: String
      GameAPI:RemoveEvent(String name)
      GameAPI:Reset()
-     GameAPI:SetCursor(String cursor = default)
      GameAPI:DebugCommand(String command), returns: String
      GameAPI:ExecuteWhenFree(LuaFunction function)
      GameAPI:RegisterTrigger(String name)
@@ -219,6 +217,8 @@ The ReflectionAPI and MultiplayerAPI act as wrappers for SMAPI APIs and have not
      WorldAPI:LocationName(GameLocation loc), returns: String
      WorldAPI:GetLocation(String locationName(optional)), returns: GameLocation
      WorldAPI:GetEmptyTile(Vector2 tile, String locationName(optional)), returns: Vector2
+     WorldAPI:GetCharacters(String locationName(optional)), returns: LuaTable
+     WorldAPI:GetMonsters(String locationName(optional)), returns: LuaTable
      WorldAPI:IsOpenTile(Vector2 tile, String locationName(optional)), returns: Boolean
      WorldAPI:ForEachBuilding(LuaFunction function, Boolean ignoreConstruction = True)
      WorldAPI:ForEachLocation(LuaFunction function)
@@ -266,8 +266,7 @@ The ReflectionAPI and MultiplayerAPI act as wrappers for SMAPI APIs and have not
      CharacterAPI:FaceDirection(Character character, Int32 direction)
      CharacterAPI:CreateMonster(String name, Vector2 tile), returns: Monster
      CharacterAPI:MoveTo(NPC character, Vector2 tile, LuaFunction callback(optional))
-     CharacterAPI:SetUsingTool(Boolean val)
-     CharacterAPI:DisableTool()
+     CharacterAPI:IsMonster(Character character), returns: Boolean
 
 ### ObjectAPI
 

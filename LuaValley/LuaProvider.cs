@@ -24,7 +24,8 @@ namespace LuaValley
         LuaValley mod;
         List<string> requiredFiles = new List<string>();
         APIManager apiManager;
-        IContentPack pack;
+        IContentPack? pack;
+        IManifest? dependency;
         HashSet<string> defaultStateKeys = new HashSet<string>();
         bool isDebugging = false;
         public LuaProvider(LuaValley mod, IContentPack pack)
@@ -37,8 +38,30 @@ namespace LuaValley
             var logger = new FileLogger(mod.Helper.DirectoryPath + "/functions.md");
             apiManager.LogFunctions(logger);
         }
+        public LuaProvider(LuaValley mod, IManifest dependency)
+        {
+            this.mod = mod;
+            this.dependency = dependency;
+            this.apiManager = new APIManager(mod, this);
+            CreateState();
+            apiManager.inject(state);
+            var logger = new FileLogger(mod.Helper.DirectoryPath + "/functions.md");
+            apiManager.LogFunctions(logger);
+        }
 
-        public IContentPack GetPack() { return pack; }
+        public string GetModId() { return (pack != null) ? pack.Manifest.UniqueID : dependency.UniqueID; }
+        public string GetSourceFolder()
+        {
+            if (pack != null)
+            {
+                return pack.DirectoryPath;
+            }
+            if (dependency != null)
+            {
+                return ModFinder.FindModPath(this.mod, dependency.UniqueID);
+            }
+            return "";
+        }
 
         private void CreateState()
         {
@@ -171,7 +194,7 @@ namespace LuaValley
             if (mod == null) return;
             var slashedPath = filePath.Replace(".", "/");
             slashedPath += ".lua";
-            string[] loadPath = { pack.DirectoryPath,  slashedPath};
+            string[] loadPath = { GetSourceFolder(),  slashedPath};
             var finalPath = Path.Combine(loadPath);
             var code = File.ReadAllText(finalPath);
             Execute(code);
@@ -207,20 +230,20 @@ namespace LuaValley
 
         public bool Load()
         {
-            mod.Monitor.Log("Loading lua mod: " + pack.Manifest.Name, LogLevel.Trace);
+            mod.Monitor.Log("Loading lua mod: " + GetModId(), LogLevel.Trace);
             Reset();
-            var loadPath = Path.Combine(pack.DirectoryPath, "mod.lua");
+            var loadPath = Path.Combine(GetSourceFolder(), "mod.lua");
             var code = File.ReadAllText(loadPath);
             try
             {
-                Execute(code);
                 var globs = state.GetTable("_G");
                 defaultStateKeys = ToList<string>(globs, true).ToHashSet<string>();
-                mod.Monitor.Log("Loaded Lua mod: " + pack.Manifest.Name, LogLevel.Trace);
+                Execute(code);
+                mod.Monitor.Log("Loaded Lua mod: " + GetModId(), LogLevel.Trace);
                 return true;
             } catch (Exception e)
             {
-                mod.Monitor.Log("Failed to load Lua mod: " + pack.Manifest.Name, LogLevel.Error);
+                mod.Monitor.Log("Failed to load Lua mod: " + GetModId(), LogLevel.Error);
                 return false;
             }
         }
@@ -230,7 +253,7 @@ namespace LuaValley
             LuaFunction start = state["gamestart"] as LuaFunction;
             if (start != null)
             {
-                CallSafe(start, pack.Manifest.Name);
+                CallSafe(start, GetModId());
             }
         }
 
@@ -239,7 +262,7 @@ namespace LuaValley
             LuaFunction start = state["saveloaded"] as LuaFunction;
             if (start != null)
             {
-                CallSafe(start, pack.Manifest.Name);
+                CallSafe(start, GetModId());
             }
         }
 
@@ -257,6 +280,31 @@ namespace LuaValley
                 mod.Monitor.Log("An error happened while calling Lua: " + e.Message, LogLevel.Error);
                 return null;
             }
+        }
+
+        public object? CallSafe(string funcName, params object[] arguments)
+        {
+            var stateFunc = state[funcName];
+            if (stateFunc == null || !(stateFunc is LuaFunction func)) return null;
+            try
+            {
+                //new Thread(() =>
+                //{
+                return func.Call(arguments);
+                //}).Start();
+            }
+            catch (Exception e)
+            {
+                mod.Monitor.Log("An error happened while calling Lua: " + e.Message, LogLevel.Error);
+                return null;
+            }
+        }
+
+        public LuaFunction? GetFunction(string funcName)
+        {
+            var stateFunc = state[funcName];
+            if (stateFunc == null || !(stateFunc is LuaFunction func)) return null;
+            return func;
         }
     }
 }

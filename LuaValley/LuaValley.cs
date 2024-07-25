@@ -21,17 +21,37 @@ namespace LuaValley
         {
             helper.Events.Input.ButtonPressed += this.OnButtonPressed;
             helper.Events.GameLoop.SaveLoaded += this.OnSaveLoaded;
-            List<IContentPack> luaMods = new List<IContentPack>(this.Helper.ContentPacks.GetOwned());
-            foreach (IContentPack luaMod in luaMods)
+            helper.Events.GameLoop.GameLaunched += this.GameLaunched;
+            helper.ConsoleCommands.Add("continue", "Used to continue lua execution when debugging", StopDebugging);
+            helper.ConsoleCommands.Add("Lua:Debug", "", StartDebugging);
+        }
+
+        private void GameLaunched(object? sender, GameLaunchedEventArgs e)
+        {
+            List<IContentPack> contentpacks = new List<IContentPack>(this.Helper.ContentPacks.GetOwned());
+            foreach (IContentPack luaMod in contentpacks)
             {
                 var modLua = new LuaProvider(this, luaMod);
                 providers.Add(modLua);
                 modLua.Load();
                 modLua.GameStart();
             }
-            helper.ConsoleCommands.Add("continue", "Used to continue lua execution when debugging", StopDebugging);
+            var dependentMods = GetDependentMods();
+            foreach (IManifest luaMod in dependentMods)
+            {
+                var modLua = new LuaProvider(this, luaMod);
+                providers.Add(modLua);
+                modLua.Load();
+                modLua.GameStart();
+            }
+        }
 
-            //var harmony = new Harmony(this.ModManifest.UniqueID);
+        private void StartDebugging(string command, string[] arguments)
+        {
+            foreach (var provider in providers)
+            {
+                provider.Debug();
+            }
         }
 
         private void StopDebugging(string command, string[] arguments)
@@ -46,7 +66,7 @@ namespace LuaValley
         private List<IManifest> GetDependentMods()
         {
             List<IManifest> mods = new List<IManifest>();
-            List<IModInfo> allMods = (List<IModInfo>)Helper.ModRegistry.GetAll();
+            var allMods = Helper.ModRegistry.GetAll();
             foreach (IModInfo mod in allMods)
             {
                 foreach (IManifestDependency dependency in mod.Manifest.Dependencies)

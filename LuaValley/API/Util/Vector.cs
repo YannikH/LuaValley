@@ -41,6 +41,11 @@ namespace LuaValley.API.Util
             return yDist < 0 ? 2 : 0;
         }
 
+        public float Distance(object second)
+        {
+            return Vector2.Distance(GetPos(Game1.player), GetPos(second));
+        }
+
         public float Distance(object first, object second)
         {
             return Vector2.Distance(GetPos(first), GetPos(second));

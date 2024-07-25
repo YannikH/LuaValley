@@ -3,6 +3,9 @@ using NLua;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
+using StardewValley.GameData.Tools;
+using StardewValley.GameData.Weapons;
+using StardewValley.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +21,7 @@ namespace LuaValley.API.Entities
         private Dictionary<string, LuaFunction> toolBeforeUses = new Dictionary<string, LuaFunction>();
         private Dictionary<string, LuaFunction> toolOverrides = new Dictionary<string, LuaFunction>();
         private bool shouldResetTool = true;
+        LuaFunction? overrideFn;
         public ToolAPI(APIManager manager): base(manager, "ToolAPI")
         {
             manager.mod.Helper.Events.Input.ButtonPressed += OnButtonPressed;
@@ -63,11 +67,34 @@ namespace LuaValley.API.Entities
             who.lastClick = Vector2.Zero;
             who.checkForExhaustion(oldStamina);
         }
+        private LuaFunction? GetToolFn(Tool t, string eventName)
+        {
+            Dictionary<string, string> customFields;
+            if (t is MeleeWeapon weapon)
+            {
+                WeaponData data = weapon.GetData(); ;
+                if (data == null) return null;
+                customFields = data.CustomFields;
+            } else
+            {
+                ToolData data = t.GetToolData();
+                if (data == null) return null;
+                customFields = data.CustomFields;
+            }
+            if (customFields == null) return null;
+            customFields.TryGetValue(api.lua.GetModId() + ".Lua." + eventName, out string? useFuncName);
+            if (useFuncName != null)
+            {
+                return api.lua.GetFunction(useFuncName);
+            }
+            return null;
+        }
 
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
         {
             
             if (e.Button != SButton.MouseLeft && e.Button != SButton.C && e.Button != SButton.ControllerA) return;
+            if (Game1.activeClickableMenu != null) return;
             var activeTool = Game1.player.CurrentTool;
             if (activeTool != null)
             {
@@ -79,20 +106,38 @@ namespace LuaValley.API.Entities
                 }
                 if (toolBeforeUses.ContainsKey(id))
                 {
-                    var result = api.lua.CallSafe(toolBeforeUses[activeTool.ItemId]);
-                    if (result != null && result.GetType().IsArray && ((object[])result).Length > 0)
-                    {
-                        object[] resArr = (object[])result;
-                        if (resArr[0] is bool resBool && !resBool) {
-                            api.mod.Helper.Input.Suppress(e.Button);
-                            return;
-                        }
-                    }
+                    handleBeforeFn(toolBeforeUses[activeTool.ItemId], e.Button);
+                }
+                LuaFunction? configBeforeFn = GetToolFn(activeTool, "BeforeUse");
+                if (configBeforeFn != null) {
+                    handleBeforeFn(configBeforeFn, e.Button);
+                }
+                LuaFunction? configOverrideFn = GetToolFn(activeTool, "OnUse");
+                if (configOverrideFn != null)
+                {
+                    shouldResetTool = false;
+                    overrideFn = configOverrideFn;
+                    Game1.player.toolOverrideFunction = OverrideTool;
                 }
                 if (toolOverrides.ContainsKey(id))
                 {
                     shouldResetTool = false;
+                    overrideFn = toolOverrides[id];
                     Game1.player.toolOverrideFunction = OverrideTool;
+                }
+            }
+        }
+
+        private void handleBeforeFn(LuaFunction function, SButton button)
+        {
+            var result = api.lua.CallSafe(function);
+            if (result != null && result.GetType().IsArray && ((object[])result).Length > 0)
+            {
+                object[] resArr = (object[])result;
+                if (resArr[0] is bool resBool && !resBool)
+                {
+                    api.mod.Helper.Input.Suppress(button);
+                    return;
                 }
             }
         }
@@ -105,9 +150,9 @@ namespace LuaValley.API.Entities
         private void OverrideTool(Farmer who)
         {
             var activeTool = Game1.player.CurrentTool;
-            if (activeTool != null && toolOverrides.ContainsKey(activeTool.ItemId))
+            if (activeTool != null && overrideFn != null)
             {
-                api.lua.CallSafe(toolOverrides[activeTool.ItemId]);
+                api.lua.CallSafe(overrideFn);
             }
             if (shouldResetTool)
             {

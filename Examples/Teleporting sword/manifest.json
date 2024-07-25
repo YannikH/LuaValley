@@ -1,0 +1,14 @@
+{
+  "Name": "LuaExampleMod",
+  "Author": "YH",
+  "Version": "1.0.0",
+  "Description": "<One or two sentences about the mod>",
+  "UniqueID": "YH.LuaExampleMod",
+  "MinimumApiVersion": "4.0.0",
+  "ContentPackFor": {
+    "UniqueID": "Pathoschild.ContentPatcher"
+  },
+  "Dependencies": [
+    { "UniqueID": "YH.LuaValley" }
+  ]
+}

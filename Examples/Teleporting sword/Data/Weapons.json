@@ -1,0 +1,34 @@
+{
+  "Changes": [
+    {
+      "Action": "EditData",
+      "Target": "Data/Weapons",
+      "Entries": {
+        "{{ModId}}_TeleSword": {
+          "Name": "{{ModId}}_TeleSword",
+          "Displayname": "The sword that seeks danger",
+          "Description": "This sword seems awfully eager for a fight",
+          "MinDamage": 30,
+          "MaxDamage": 45,
+          "Knockback": 1.5,
+          "Speed": -10,
+          "Precision": 0,
+          "Defense": 0,
+          "Type": 0,
+          "MineBaseLevel": -1,
+          "MineMinLevel": -1,
+          "AreaOfEffect": 2,
+          "CritChance": 0.04,
+          "CritMultiplier": 3.0,
+          "CanBeLostOnDeath": true,
+          "Texture": "TileSheets/weapons",
+          "SpriteIndex": 2,
+          "Projectiles": null,
+          "CustomFields": {
+            "{{ModId}}.Lua.BeforeUse": "BeforeTeleSword"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -209,5 +209,7 @@ namespace LuaValley.API.Entities
                 };
             }
         }
+
+        public bool IsMonster(Character character) { return character is Monster; }
     }
 }

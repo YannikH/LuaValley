@@ -13,6 +13,7 @@ using xTile.Tiles;
 using xTile.Layers;
 using System.Reflection.Metadata.Ecma335;
 using StardewValley.Extensions;
+using StardewValley.Monsters;
 
 namespace LuaValley.API.Game
 {
@@ -61,6 +62,26 @@ namespace LuaValley.API.Game
                 loc = Game1.getLocationFromName(locationName);
             }
             return Utility.getRandomAdjacentOpenTile(tile, loc);
+        }
+
+        public LuaTable GetCharacters(string locationName = null)
+        {
+            GameLocation loc = GetLocation(locationName);
+            return api.lua.ToTable(loc.characters.ToArray<NPC>());
+        }
+
+        public LuaTable GetMonsters(string locationName = null)
+        {
+            GameLocation loc = GetLocation(locationName);
+            List<Monster> monsters = new List<Monster>();
+            foreach (var character in loc.characters)
+            {
+                if (character is Monster monster)
+                {
+                    monsters.Add(monster);
+                }
+            }
+            return api.lua.ToTable(monsters);
         }
 
         public bool IsOpenTile(Vector2 tile, string locationName = null)
